@@ -1,3 +1,4 @@
+
 ///DECLARACION DE VARIABLES GLOBALES///
 
 ///Variables de precio:
@@ -87,19 +88,19 @@ function menuBurger(){
 
 //Creamos su hamburgesa, llamando funciones para ingredientes y mostrando un resumen de orden por alerta.
 function crearBurger(){    
-    ingredientePan      = agregarPan();
-    ingredienteCarne    = agregarCarne();
-    ingredienteVerde    = agregarVerdura();
-    ingredienteQueso    = agregarQueso();
-    ingredienteExtra    = agregarExtra();    
-    tamanio             = setSize();
-    precioFinal         = setPrecio(tamanio);
-    numOrder            = Math.ceil(Math.random()*100);
+    let ingredientePan      = agregarPan();
+    let ingredienteCarne    = agregarCarne();
+    let ingredienteVerde    = agregarVerdura();
+    let ingredienteQueso    = agregarQueso();
+    let ingredienteExtra    = agregarExtra();    
+    let tamanio             = setSize();
+    let precioFinal         = setPrecio(tamanio);
+    let numOrder            = Math.ceil(Math.random()*100);
 
     alert("Su Burger Hero ha sido creada!\nSu pan es: "+ingredientePan+".\nEsta compuesta por un medallón: "+ingredienteCarne+".\nSus ingredientes son:\nVerde: "+ingredienteVerde+".\nQueso: "+ingredienteQueso+".\nExtra: "+ingredienteExtra+".\nEl tamaño elegido es: "+
     tamanio+"\nEl precio Final es de: $"+precioFinal+".\nTu número de orden es: "+numOrder+".\nAl finalizar puedes ver en la consola todas las Hero burguers que has armado!"); 
     
-    hamburguesas.push(new Burger(ingredientePan,ingredienteCarne,ingredienteVerde,ingredienteQueso,ingredienteExtra,tamanio,precioFinal,numOrder));
+    hamburguesas.push(new Burger(ingredienteCarne,ingredientePan,ingredienteVerde,ingredienteQueso,ingredienteExtra,tamanio,precioFinal,numOrder));
     moreBurger();
 }
 
@@ -124,9 +125,10 @@ function moreBurger(){
     }
 }
 ///Funciones de ingredientes, son todas similares, refieren al array de ingredientes correspondiente segun elección del usuario.
-function agregarPan(){  
+function agregarPan(){ 
 
-    let opcion = parseInt(prompt(`Tipo de Pan:\n
+    let opcion = parseInt(prompt(
+        `Tipo de Pan:\n
             1) ${ingredientesPanes[0].nombre} - $ ${ingredientesPanes[0].precio}\n 
             2) ${ingredientesPanes[1].nombre} - $ ${ingredientesPanes[1].precio}\n                        
             `));          
@@ -368,47 +370,82 @@ function setPrecio(tamanio){
     }
     return precioFinal;
 }
-///Agregamos al html el detalle de la orden.
+///Agregamos al html el detalle de la orden. Desafio COMPLEMENTARIO INTERACTUAR HTML
 function printOrder(){
     for (const burger of hamburguesas){ 
-        let index = hamburguesas.indexOf(burger);   
-        document.write(`<p>Esta es tu orden:</p>
-                        <table>
-                            <colgroup>
-                                <col>
-                                <col>
-                                <col>
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <td style="color: white">Hero Burguer: ${index+1}</td>
-                                    <td style="color: white"> Tipo de Pan: ${burger.ingredientePan}</td>
-                                    <td style="color: white"> Tipo de Medallón: ${burger.ingredienteCarne}</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="color: white">Verdes: ${burger.ingredienteVerde}</td>
-                                    <td style="color: white"> Queso: ${burger.ingredienteQueso}</td>
-                                    <td style="color: white"> Extras: ${burger.ingredienteExtra}</td>
-                                </tr>
-                                <tr>
-                                    <td style="color: white">Tamaño: ${burger.tamanio}</td>
-                                    <td style="color: white"> Precio Final: ${burger.precioFinal}</td>
-                                    <td style="color: white"> Número de Orden: ${burger.numOrder}</td>
-                                </tr>
-                            </tbody>
-                        </table>`);        
+        console.log(burger);
+        let index = hamburguesas.indexOf(burger); 
+        let contenido = document.createElement("div");
+        contenido.innerHTML= `        
+        <section id="${index+1}"> 
+            <div class="row_centro">
+                    <h4><i>Hero Burger N°: <span id="indice">${index+1}</span></i></h4>
+            </div> 
+            <div class="row">                        
+                <div class="column">
+                    <p>Tipo de Pan:</p>
+                </div>
+                <div class="column">
+                    <p id="pan">${burger.ingredientePan}</p>
+                </div>
+            </div>    
+            <div class="row">                        
+                <div class="column">
+                    <p>Extras:</p>
+                </div>
+                <div class="column">
+                    <p id="extra">${burger.ingredienteExtra}</p>
+                </div>
+            </div>
+            <div class="row">                        
+                <div class="column">
+                    <p>Verdes:</p>
+                </div>
+                <div class="column">
+                    <p id="verde">${burger.ingredienteVerde}</p>
+                </div>
+            </div>
+            <div class="row">                        
+                <div class="column">
+                    <p>Queso:</p>
+                </div>
+                <div class="column">
+                    <p id="queso">${burger.ingredienteQueso}</p>
+                </div>
+            </div>
+            <div class="row">                        
+                <div class="column">
+                    <p>Medallón:</p>
+                </div>
+                <div class="column">
+                    <p id="medallon">${burger.ingredienteCarne}</p>
+                </div>
+            </div>
+            <div class="row">                        
+                <div class="column">
+                    <p>Tamaño:</p>
+                </div>
+                <div class="column">
+                    <p id="tamano">${burger.tamanio}</p>
+                </div>            
+            </div>
+            <div class="row">                        
+                <div class="column">
+                    <p>Numero Orden: <span id="orden">${burger.numOrder}</span></p>
+                </div>
+                <div class="column">
+                    <p>Precio Final: <span id="precio">${burger.precioFinal}</span></p>
+                </div>
+            </div>
+        </section>
+        `  
+        document.body.append(contenido);
     }
 }
+
 ///EJECUCCION///
 alert("Bienvenido a HeroBurger: Tu Hamburguesa Heroica");
 menuBurger();
-///El usuario puede visualizar por consola las hamburguesas creadas en la ejecución actual.
+////El usuario puede visualizar por consola las hamburguesas creadas en la ejecución actual.
 console.log(hamburguesas);
 printOrder();
-
-
-
-
-
