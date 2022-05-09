@@ -1,4 +1,3 @@
-
 ///DECLARACION DE VARIABLES GLOBALES///
 
 ///Variables de precio:
@@ -379,7 +378,7 @@ function printOrder(){
         contenido.innerHTML= `        
         <section id="${index+1}"> 
             <div class="row_centro">
-                    <h4><i>Hero Burger N°: <span id="indice">${index+1}</span></i></h4>
+                <h4><i>Hero Burger N°: <span id="indice">${index+1}</span></i></h4>
             </div> 
             <div class="row">                        
                 <div class="column">
